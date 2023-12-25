@@ -1,0 +1,96 @@
+﻿@model GCH211211.Models.Product
+@{
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+@if (Model != null)
+{
+    <div class="container-fluid">
+        <!-- end page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <!-- Product image -->
+                                <a href="javascript: void(0);" class="text-center d-block mb-4">
+
+                                    <img src="@Model.Image" class="img-fluid" style="max-width: 280px;" alt="Product-img">
+                                </a>
+                            </div> <!-- end col -->
+                            <div class="col-lg-7">
+                                <form class="pl-lg-4">
+                                    <!-- Product title -->
+                                    <h3 class="mt-0">@Model.Name</h3>
+                                    <p class="font-16">
+                                        <span class="text-warning mdi mdi-star"></span>
+                                        <span class="text-warning mdi mdi-star"></span>
+                                        <span class="text-warning mdi mdi-star"></span>
+                                        <span class="text-warning mdi mdi-star"></span>
+                                        <span class="text-warning mdi mdi-star"></span>
+                                    </p>
+                                    <!-- Product stock -->
+                                    @if (Model.Quantity >= 1)
+                                    {
+                                        <span class="badge badge-success mt-3">Instock</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-danger mt-3">Out of Stock</span>
+                                    }
+
+                                    <!-- Product description -->
+                                    <div class="mt-4">
+                                        <h6 class="font-14">Retail Price:</h6>
+                                        <h3> $@Model.Price</h3>
+                                    </div>
+
+                                    <!-- Quantity -->
+                                    <div class="mt-4">
+                                        <h6 class="font-14">Quantity: @Model.Quantity</h6>
+                                    </div>
+
+                                    <!-- Product description -->
+                                    <div class="mt-4">
+                                        <h6 class="font-14">Description:</h6>
+                                        <p>@Model.Description</p>
+                                    </div>
+                                    <div class="d-flex">
+
+                                        <a asp-controller="Home" asp-action="AddtoCart" asp-route-Id="@Model.Id" class="btn btn-danger ml-2 confirmation ">
+                                            <i class="mdi mdi-cart mr-1"></i> Add to cart
+                                        </a>
+                                    </div>
+                                    <!-- Product information -->
+                                    <div class="mt-4">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <h6 class="font-14">Available Stock:</h6>
+                                                <p class="text-sm lh-150">@Model.Quantity</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <h6 class="font-14">Number of Orders:</h6>
+                                                @{
+                                                    Random rnd = new Random();
+                                                    // This will return either 1 or 2 randomly.
+                                                    int order = rnd.Next(1, 5000);
+                                                }
+                                                <p class="text-sm lh-150">@order</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div> <!-- end col -->
+                        </div> <!-- end row-->
+                    </div> <!-- end card-body-->
+                </div> <!-- end card-->
+            </div> <!-- end col-->
+        </div>
+        <!-- end row-->
+    </div>
+}
+else
+{
+    <p>No Available</p>
+}

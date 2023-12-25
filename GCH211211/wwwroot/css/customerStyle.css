@@ -1,0 +1,44 @@
+﻿.content_top .heading {
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(27, 117, 133);
+    text-transform: uppercase;
+    font-size: 20px;
+}
+
+.content .allproduct {
+    width: 92%;
+    margin: 0 auto;
+}
+
+.section .grid_1_of_4 {
+    width: calc(20%- 5px);
+    float: left;
+    margin: 7px;
+    border: 1px solid lightgray;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+    .section .grid_1_of_4 > a > img {
+        width: 212px;
+        height: 212px;
+    }
+
+.section .grid_1_of_4 {
+    text-align: center;
+    padding: 10px;
+}
+
+    .section .grid_1_of_4 h2 {
+        font-size: 1.1em;
+        font-weight: normal;
+        text-transform: uppercase;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        margin: 10 0px;
+    }
+
+.section .price-details {
+    width: 100%;
+    border-top: 1px solid red;
+}

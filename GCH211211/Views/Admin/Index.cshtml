@@ -1,0 +1,11 @@
+﻿@model List<Order>
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="manage">
+    <a asp-controller="Categories" asp-action="Index">Manage Categories</a>
+    <a asp-controller="Books" asp-action="Index">Manage Books</a>
+    <a asp-action="User">Manage Users</a>
+    <a asp-action="Order">Manage Orders</a>
+</div>

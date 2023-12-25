@@ -1,0 +1,88 @@
+﻿@model List<GCH211211.Models.Cart>
+
+@{
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+    ViewData["Title"] = "Page Title";
+}
+
+<script src="~/js/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".updateCart").click(function (event) {
+            event.preventDefault();
+            var quantity = $(".quantity_" + $(this).attr("data-id")).val();
+            console.log(quantity);
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("updateCart", "Home")",
+                data: {
+                    id: $(this).attr("data-id"),
+                    quantity: quantity
+                },
+                success: function (result) {
+                    window.location.href = '@Url.Action("ViewCart", "Home")';
+                }
+            });
+        });
+    });
+</script>
+
+<div class="List-cart">
+    <table class="table">
+        <tr>
+            <th></th>
+            <th>Product</th>
+            <th>Image</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total price</th>
+            <th></th>
+        </tr>
+        @{
+            int counter = 0;
+            foreach (var item in Model)
+            {
+                string txt_class = "quantity_" + item.product.Id;
+                decimal total = item.product.Price * item.Quantity;
+                counter++;
+                <tr>
+                    <td>@counter</td>
+                    
+                    <td>@item.product.Name</td>
+                    <td>@item.product.Image</td>
+                    <td><input type="number" class="@txt_class" value="@item.Quantity" min="1" /></td>
+                    <td>$@item.product.Price</td>
+                    <td>$@total</td>
+                    <td><a href="" data-id="@item.product.Id" class="updateCart">Update</a></td>
+                    <td><a asp-controller="Home" asp-action="RemoveCart" asp-route-id="@item.product.Id">Delete</a></td>
+                </tr>
+            }
+        }
+    </table>
+</div>
+<div>
+    <a button type="submit" asp-controller="Home" asp-action="Checkout" class="Checkout">Make order</a>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        console.log('Script executed');
+        $("#orderNow").click(function (event) {
+            event.preventDefault();
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.RouteUrl("UpdateCart")",
+                success: function () {
+                    window.location.href = "@Url.RouteUrl("Index")";
+
+                },
+                error: function () {
+                    alert('Error creating order');
+                }
+            });
+        });
+    });
+</script>

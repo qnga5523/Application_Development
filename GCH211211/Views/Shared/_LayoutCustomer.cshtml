@@ -1,0 +1,130 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+<!Doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="{{asset('images/peca-04.png')}}">
+    <link rel="stylesheet" href="~/Home/css/icons.min.css">
+    <link rel="stylesheet" href="~/Home/css/app-modern.min.css">
+    <link rel="stylesheet" href="~/Home/css/app-modern-dark.min.css">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          rel="stylesheet" />
+    <link rel="stylesheet" href="~/Home/css/carousel.css">
+    <link rel="shortcut icon" href="{{asset('images/peca.png')}}">
+    <link rel="stylesheet" href="~/Home/css/vendor/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="~/Home/css/vendor/responsive.bootstrap4.css">
+    <link rel="stylesheet" href="~/Home/css/vendor/jquery-jvectormap-1.2.2.css">
+
+    <title>FPT Book</title>
+</head>
+<body>
+    <div class="navbar-custom topnav-navbar topnav-navbar-dark" style="position: sticky">
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <ul class="list-unstyled topbar-right-menu float-right mb-0">
+                <li class="dropdown notification-list d-lg-none">
+                    <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                        <i class="dripicons-search noti-icon"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-animated dropdown-lg p-0">
+                        <form class="p-3">
+                            <input type="text" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
+                        </form>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+                </li>
+                <li class="dropdown notification-list">
+                    <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                        <span>
+                            <span class="account-user-name">FPT BOOK</span>
+                        </span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu profile-dropdown">
+                       
+                        <a asp-controller="Home" asp-action="ViewOrder" class="dropdown-item notify-item"> <i class="mdi mdi-account-circle mr-1"></i> <span>My Order</span> </a>
+                        <a asp-controller="Home" asp-action="ViewCart" class="dropdown-item notify-item"> <i class="mdi mdi-account-circle mr-1"></i> <span>Shopping Cart</span> </a>
+                        <!-- item-->
+                        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                            <button type="submit" class="dropdown-item notify-item"> <i class="mdi mdi-logout mr-1"></i>Logout</button>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        }
+        else
+        {        
+                <li class="dropdown notification-list topbar-dropdown">
+                    <a class="nav-link dropdown-toggle arrow-none" asp-area="Identity" asp-page="/Account/Register" style="font-size:17px"><i class=" mdi mdi-registered-trademark"></i>Register</a>
+                </li>
+                <li class="dropdown notification-list topbar-dropdown">
+                    <a class="nav-link dropdown-toggle arrow-none" asp-area="Identity" asp-page="/Account/Login" style="font-size:17px">Login</a>
+                </li>
+        }
+
+        <div class="container-fluid">
+            <!-- LOGO -->
+            <ul class="list-unstyled topbar-right-menu float-right mb-0">
+                <li class="dropdown notification-list d-lg-none show">
+                    <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button"
+                       aria-haspopup="false" aria-expanded="true">
+                        <i class="dripicons-search noti-icon"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-animated dropdown-lg p-0 show"
+                         style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(10px, 70px, 0px);"
+                         x-placement="bottom-start">
+                        <form asp-controller="Home" asp-action="Search" method="post">
+                            <input type="text" class="form-control" placeholder="Search ..."
+                                   aria-label="Recipient's username" name="productname">
+                        </form>
+                    </div>
+                </li>
+            </ul>
+            <div class="app-search dropdown">
+                <form asp-controller="Home" asp-action="Search" method="post">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="top-search"
+                               style="border-radius: 15px; margin-right: 15px" name="search">
+                        <span class="mdi mdi-magnify search-icon"></span>
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit" style="border-radius: 15px">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <ul class="list-unstyled topbar-right-menu float-left mb-0">
+                <li class="dropdown notification-list topbar-dropdown">
+                    <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button"
+                       aria-haspopup="false" aria-expanded="false">
+                        <i class="uil-github"></i>
+                        <span class="align-middle d-none d-sm-inline-block" style="font-size: 17px">Category</span> <i class="mdi mdi-chevron-down d-none d-sm-inline-block align-middle"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu">
+                        <!-- item-->
+                        @foreach (var item in ViewBag.Categories)
+                        {
+                            <a asp-controller="Home" asp-action="Index2" asp-route-Id="@item.Id" class="dropdown-item notify-item">
+                                <span class="align-middle">@item.Name</span>
+                            </a>
+                        }
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <script src="~/Home/javascript/vendor.min.js"></script>
+    <script src="~/Home/javascript/app.min.js"></script>
+</body>
+</html>

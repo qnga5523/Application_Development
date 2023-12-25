@@ -1,0 +1,129 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book owner page</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Asp_net.styles.css" asp-append-version="true" />
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+    <meta content="Coderthemes" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="~/images/favicon.ico">
+
+    <!-- App css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+    <link href="~/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/app.min.css" rel="stylesheet" type="text/css" id="light-style" />
+    <link href="~/css/app-dark.min.css" rel="stylesheet" type="text/css" id="dark-style" />
+    <link href="~/css/BookOwner.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <!-- Begin page -->
+    <div class="wrapper">
+        <!-- ========== Left Sidebar Start ========== -->
+        <div class="left-side-menu">
+
+            <div class="h-100" id="left-side-menu-container" data-simplebar>
+                <!--- Sidemenu -->
+                <ul class="metismenu side-nav">
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <li class="side-nav-title side-nav-item">Apps</li>
+                        <li class="side-nav-item">
+                            <a asp-controller="Products" asp-action="Index" class="side-nav-link">
+                                <i class="uil-home-alt"></i>
+                                <span> Products </span>
+                            </a>
+                        </li>
+                        <li class="side-nav-item">
+                            <a asp-controller="Categories" asp-action="Index" class="side-nav-link">
+                                <i class="uil-calender"></i>
+                                <span> Categories </span>
+                            </a>
+                        </li>
+                        <li class="side-nav-title side-nav-item">Management</li>
+                        <li class="side-nav-item">
+                            <a asp-controller="Admin" asp-action="Order" class="side-nav-link">
+                                <i class="uil-calender"></i>
+                                <span> Order </span>
+                            </a>
+                        </li>
+                        <li class="side-nav-item">
+                            <a asp-controller="Admin" asp-action="User" class="side-nav-link">
+                                <i class="uil-calender"></i>
+                                <span> Manager account </span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+        </div>
+        <div class="content-page">
+            <div class="content">
+                <!-- Topbar Start -->
+                <div class="navbar-custom">
+                    <ul class="list-unstyled topbar-right-menu float-right mb-0">
+                        <li class="dropdown notification-list d-lg-none">
+                            <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                <i class="dripicons-search noti-icon"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-animated dropdown-lg p-0">
+                                <form class="p-3">
+                                    <input type="text" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
+                                </form>
+                            </div>
+                        </li>
+                     
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+                        </li>
+                        <li class="nav-item">
+                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                            </form>
+                        </li>
+                           
+                        
+
+                    </ul>
+                    <button class="button-menu-mobile open-left disable-btn">
+                        <i class="mdi mdi-menu"></i>
+                    </button>
+                  
+                </div>
+                <!-- end Topbar -->
+                <!-- Start Content-->
+                <div class="container-fluid" style="margin-bottom: 10px">
+                    @RenderBody()
+
+                </div> <!-- container -->
+
+            </div> <!-- content -->
+            <!-- Footer Start -->
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            2018 - 2020 © FPT BOOK MANAGEMENT (FPT.COM)
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!-- end Footer -->
+
+        </div>
+    </div>
+    
+    <script src="~/js/vendor.min.js"></script>
+    <script src="~/js/app.min.js"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

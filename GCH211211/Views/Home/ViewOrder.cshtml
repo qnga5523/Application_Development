@@ -1,0 +1,40 @@
+﻿@model List<GCH211211.Models.Order>
+
+@{
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+    ViewData["Title"] = "Đơn Hàng";
+}
+
+<h2>Đơn Hàng</h2>
+
+@if (Model.Count > 0)
+{
+    @foreach (var order in Model)
+    {
+        <h3>Order:</h3>
+       
+
+        <table>
+            <tr>
+                <th style="padding-left: 20px;">Book</th>
+                <th style="padding-left: 20px;">Image</th>
+                <th style="padding-left: 20px;">Quantity</th>
+                <th style="padding-left: 20px;">Price</th>
+            </tr>
+           
+                <tr>
+                    <td>@order.ProductName</td>
+                <td><img src="@order.Image" width="100" height="100"/></td>
+                    <td>@order.Quantity</td>
+                    <td>@order.Price.ToString("c")</td>
+                    <td>@order.TotalPrice.ToString("c")</td>
+                </tr>
+            
+        </table>
+    }
+}
+else
+{
+    <p class="alert alert-info">Bạn chưa có đơn hàng nào.</p>
+}
+

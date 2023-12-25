@@ -1,0 +1,79 @@
+﻿@model List<Product>
+@{
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+    ViewData["Title"] = "Home Page";
+}
+<div class="container-fluid mm-active">
+    <div class="wrapper mm-show">
+        <div class="content-page">
+            <div class="content">
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-md-6 col-xl-3">
+                            <!-- project card -->
+                            <div class="card d-block text-dark" style="width: 300px; height: 300px; margin: 50px 50px; box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.25),0 5px 15px 0 rgba(0, 0, 0, 0.12)">
+                                <!-- project-thumbnail -->
+                                <img class="card-img-top" src="@item.Image"
+                                     alt="project image cap" style="height: 100%; width:100%">
+
+                                <div class="card-body position-relative" style="padding-left: unset; padding-right: unset; margin-bottom: 9px ">
+                                    <!-- project title-->
+                                    <h4 class="mt-0">
+                                        <a asp-controller="Home" asp-action="Details" asp-route-id="@item.Id">
+                                            <class ="text-title">@item.Name
+                                        </a>
+                                    </h4>
+                                    <!-- project detail-->
+                                    <p class="mb-3">
+                                        <span class="pr-2 text-nowrap">
+                                            <i class=" dripicons-shopping-bag"></i>
+
+                                            @for (int i = 0; i < ViewBag.Categories.Count; i++)
+                                            {
+                                                if (ViewBag.Categories[i].Id == item.CategoryId)
+                                                {
+                                                    <b>
+                                                        Category: @ViewBag.Categories[i].Name
+                                                    </b>
+                                                }
+                                            }
+
+                                        </span>
+
+                                        <span class="text-nowrap">
+                                            <i class="uil uil-usd-circle"></i>
+                                            <b>Price: $@item.Price</b>
+                                        </span>
+                                        <br>
+                                        <span class="text-nowrap">
+                                            <i class="uil-atom"></i>
+                                            <b>Quantity: @item.Quantity</b>
+
+                                        </span>
+                                    </p>
+
+                                    <!-- project progress-->
+                                    @{
+                                        Random rnd = new Random();
+                                        // This will return either 1 or 2 randomly.
+                                        int question = rnd.Next(1, 100);
+                                    }
+                                    <p class="mb-2 font-weight-bold">
+                                        Most people like <span class="float-right">@question%</span>
+                                    </p>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar" role="progressbar" aria-valuenow="45"
+                                             aria-valuemin="0" aria-valuemax="100" style="width: @question%;">
+                                        </div><!-- /.progress-bar -->
+                                    </div><!-- /.progress -->
+                                </div> <!-- end card-body-->
+                            </div> <!-- end card-->
+                        </div>
+                    }
+                    <!-- end col -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

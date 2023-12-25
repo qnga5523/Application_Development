@@ -1,0 +1,124 @@
+﻿@model List<Product>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+    <h1>
+        Book Management  <a asp-controller="Products" asp-action="Create" class="btn btn-secondarys button-add" type="button">
+            <i class="fa-solid fa-plus icon-plus" style="padding-top: 10px"></i>
+        </a>
+    </h1>
+    @if (TempData["Message"] != null)
+    {
+        <center>
+            <span class="badge badge-danger">@TempData["Message"]</span>
+        </center>
+    }
+    @if (Model.Count != 0)
+    {
+        <p>
+            <a asp-controller="Products" asp-action="SortASC">Sort quantity in ascending <i class="fa-solid fa-sort-up"></i></a>
+            <br />
+            <br />
+            <a asp-controller="Products" asp-action="SortDESC">Sort quantity in descending <i class="fa-solid fa-sort-down"></i></a>
+        </p>
+    }
+
+    @if (TempData["Message"] == null && Model.Count == 0)
+    {
+        <center>
+            <span class="badge badge-danger">Do not have any product</span>
+        </center>
+
+    }
+    else
+    {
+        <h3>All Product</h3>
+        <div class="table-responsive">
+            <div id="products-datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                <div class="col-sm-12">
+                    <table class="table table-centered w-100 dt-responsive nowrap dataTable no-footer dtr-inline" id="products-datatable" role="grid" aria-describedby="products-datatable_info" style="width: 1551px;">
+                        <thead class="thead-light">
+                            <tr role="row">
+                                <th>Product</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Status</th>
+                                <th style="width: 150px;" class="sorting_disabled" rowspan="1" colspan="1" aria-label="Action">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr role="row" class="odd">
+                                    <td class="sorting_1">
+                                        <img src="@item.Image" alt="contact-img" title="contact-img" class="rounded mr-3" height="48">
+                                        <p class="m-0 d-inline-block align-middle font-16">
+                                            <a asp-controller="Products" asp-action="Details" asp-route-id="@item.Id" class="text-body">@item.Name</a>
+                                            <br>
+                                            <span class="text-warning mdi mdi-star"></span>
+                                            <span class="text-warning mdi mdi-star"></span>
+                                            <span class="text-warning mdi mdi-star"></span>
+                                            <span class="text-warning mdi mdi-star"></span>
+                                            <span class="text-warning mdi mdi-star"></span>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        @{
+                                            for (int i = 0; i < ViewBag.Categories.Count; i++)
+                                            {
+                                                if (ViewBag.Categories[i].Id == item.CategoryId)
+                                                {
+                                                    <text>@ViewBag.Categories[i].Name</text>
+                                                }
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        $@item.Price
+                                    </td>
+
+                                    <td>
+                                        @item.Quantity
+                                    </td>
+                                    @if (item.Quantity >= 1)
+                                    {
+
+                                        <td>
+                                            <span class="badge badge-success">Available</span>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            <span class="badge badge-danger">Out of Stock</span>
+                                        </td>
+                                    }
+                                    <td class="table-action">
+                                        <a asp-controller="Products" asp-action="Details" class="action-icon" asp-route-id="@item.Id"> <i class="mdi mdi-eye"></i></a>
+                                        <a asp-controller="Products" asp-action="Edit" class="action-icon" asp-route-id="@item.Id"> <i class="mdi mdi-square-edit-outline "></i></a>
+                                        <a asp-controller="Products" asp-action="Confirm" class="action-icon" asp-route-id="@item.Id"> <i class="mdi mdi-delete"></i></a>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    }
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

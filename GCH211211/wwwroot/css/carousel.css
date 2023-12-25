@@ -1,0 +1,20 @@
+/*.carousel{*/
+/*    background-image: url('../images/puppy_images/bg.jpg');*/
+/*    background-repeat: no-repeat;*/
+/*    background-size: cover;*/
+/*}*/
+.about-us {
+    border-style: none;
+}
+.About-custom {
+    background-color: #d9dbdb;
+    padding: 100px 150px;
+}
+.Address-custom {
+    background-color: blanchedalmond;
+    padding: 100px 150px;
+}
+.carousel img{
+    height: 100%;
+    width: 100%;
+}
